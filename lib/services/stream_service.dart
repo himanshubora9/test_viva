@@ -12,12 +12,14 @@ class StreamService {
     required String apiKey,
     required String userId,
     required String name,
+    required String role,
     required String token,
   }) async {
     final videoUser = video.User(
       info: video.UserInfo(
         id: userId,
         name: name,
+        role: role,
       ),
     );
 

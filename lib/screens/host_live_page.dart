@@ -30,7 +30,7 @@ class _HostLivePageState extends State<HostLivePage> {
 
     // ✅ v1.2.2 correct flow
     await call!.getOrCreate();
-    await call!.join();
+    // await call!.join();
 
     await call!.setCameraEnabled(enabled: true);
     await call!.setMicrophoneEnabled(enabled: true);

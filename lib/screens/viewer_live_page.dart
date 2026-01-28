@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stream_video_flutter/stream_video_flutter.dart';
+
 import '../services/stream_service.dart';
 import '../widgets/live_layout.dart';
 
@@ -20,16 +21,20 @@ class _ViewerLivePageState extends State<ViewerLivePage> {
   }
 
   Future<void> join() async {
-    final video = StreamService.instance.videoClient;
+    try {
+      final video = StreamService.instance.videoClient;
+     final userTokens= await video.connect(includeUserDetails: true);
+     print('userTokens :: ${userTokens.map((e) => e.userId)}');
+      call = video.makeCall(
+        callType: StreamCallType.liveStream(),
+        id: "viva-session-1",
+      );
 
-
-    call = video.makeCall(
-      callType: StreamCallType.liveStream(),
-      id: "viva-session-1",
-    );
-
-    await call!.join();
-    setState(() {});
+      await call!.getOrCreate();
+      setState(() {});
+    } on Exception catch (e) {
+      print(e);
+    }
   }
 
   @override

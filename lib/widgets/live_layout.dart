@@ -11,32 +11,45 @@ class LiveLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final channel = StreamService.instance.chatClient.channel(
+    final chatClient = StreamService.instance.chatClient;
+
+    final channel = chatClient.channel(
       'livestream',
       id: call.id,
     );
 
-    return Column(
-      children: [
-        // Video call display
-        Expanded(flex: 3, child: StreamCallContainer(call: call)),
-
-        // Chat UI
-        Expanded(
-          flex: 2,
-          child: StreamChannel(
-            channel: channel,
-            child: Column(
-              children: [
-                Expanded(
-                  child: StreamMessageListView(), // Correct chat message list
-                ),
-                const StreamMessageInput(), // Correct input widget
-              ],
+    return StreamChat(
+      client: chatClient,
+      child: StreamChatTheme(
+        data: StreamChatThemeData.light(),
+        child: Column(
+          children: [
+            // Video call display
+            Expanded(
+              flex: 3,
+              child: StreamCallContainer(call: call),
             ),
-          ),
+
+            // Chat UI
+            Expanded(
+              flex: 2,
+              child: StreamChannel(
+                channel: channel,
+                child: Column(
+                  children: const [
+                    Expanded(
+                      child: StreamMessageListView(),
+                    ),
+                    StreamMessageInput(
+                      disableAttachments: true,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }
