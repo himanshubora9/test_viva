@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'screens/login_page.dart';
 
 void main() {
@@ -14,7 +15,7 @@ class VivaApp extends StatelessWidget {
     return MaterialApp(
       title: 'VIVA Live',
       theme: ThemeData(useMaterial3: true),
-      home: const LoginPage(),
+      home: const LoginScreen(),
     );
   }
 }
